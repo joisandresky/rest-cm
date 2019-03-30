@@ -1,0 +1,23 @@
+{
+  "name": "rest-cm",
+  "version": "1.0.0",
+  "description": "REST API Cash Meal",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.2.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "Cash",
+    "Meal"
+  ],
+  "author": "Jois Andresky",
+  "license": "ISC"
+}
