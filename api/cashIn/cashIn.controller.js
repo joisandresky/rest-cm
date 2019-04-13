@@ -17,7 +17,7 @@ exports.index = function (req, res) {
         success: true,
         message: null,
         total: result.count,
-        jobs: result.rows
+        cashIns: result.rows
       });
     })
     .catch(err => {
