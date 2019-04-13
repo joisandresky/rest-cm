@@ -1,0 +1,14 @@
+STEP SETELAH SERVER SUDAH DI SETUP + MYSQL (SEQUELIZE)
+
+1. Buat folder Module nya di folder API, lalu buat 3 file yaitu
+index.js, namamodule.controller.js, namamodule.model.js
+
+2. Untuk Model ini harus di daftarkan di file index folder SEQUELIZE
+
+3. model yg berasal dari sequelize di gunakan di controller
+
+4. index.js yang ada di folder module api nya di daftar kan di file
+routes.js
+
+5. index.js yang di folder module juga disesuaikan route nya apa saja
+dan function handler nya kemana yg berasal dari controller

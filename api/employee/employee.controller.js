@@ -1,15 +1,17 @@
-const { Job } = require('../../sequelize');
-const Sequelize = require('sequelize');
+const { Employee, Job } = require('../../sequelize');
 
 
-// Get All Jobs
+// Get All Employees
 exports.index = function (req, res) {
   let page = Number(req.query.page) || 1,
     limit = Number(req.query.limit) || 10,
     skip = (page - 1) * limit;
 
-  Job
+  Employee
     .findAndCountAll({
+      includes: [
+        { model: Job, as: 'Jobss' }
+      ],
       offset: skip,
       limit: limit
     })
@@ -18,30 +20,8 @@ exports.index = function (req, res) {
         success: true,
         message: null,
         total: result.count,
-        jobs: result.rows
+        employees: result.rows
       });
-    })
-    .catch(err => {
-      res.send(500, {
-        success: false,
-        message: "INTERNAL SERVER ERROR",
-        error: err
-      });
-    });
-};
-
-exports.search = function (req, res) {
-  console.log('req query', req.query);
-  Job
-    .findAll({
-      where: {
-        job_title: {
-          [Sequelize.Op.substring]: '%' + req.query.value + '%'
-        }
-      }
-    })
-    .then(result => {
-      res.json(200, result);
     })
     .catch(err => {
       res.send(500, {
@@ -58,16 +38,16 @@ exports.show = function (req, res) {
     message: "Parameter ID Cannot Be null"
   });
 
-  Job
+  Employee
     .findByPk(req.params.id)
     .then(result => {
       if (!result) {
         return res.json(404, {
-          success: true, message: "Jobs id Not Found!"
+          success: true, message: "Employees id Not Found!"
         });
       }
 
-      res.json(200, { success: true, message: null, job: result });
+      res.json(200, { success: true, message: null, employee: result });
     })
     .catch(err => {
       console.log('err', err);
@@ -80,12 +60,12 @@ exports.show = function (req, res) {
 };
 
 exports.create = function (req, res) {
-  Job
+  Employee
     .create(req.body)
     .then(result => {
       res.json(201, {
         success: true,
-        message: result ? "Job Created" : "Job Not Created",
+        message: result ? "Employee Created" : "Employee Not Created",
         result: result
       });
     })
@@ -100,16 +80,16 @@ exports.create = function (req, res) {
 };
 
 exports.update = function (req, res) {
-  if (req.body.job_id) delete req.body.job_id;
+  if (req.body.employee_id) delete req.body.employee_id;
 
-  Job
+  Employee
     .findOne({
-      where: { job_id: req.params.id }
+      where: { employee_id: req.params.id }
     })
     .then(result => {
       if (!result) {
         return res.json(404, {
-          success: true, message: "Jobs id Not Found!"
+          success: true, message: "Employees id Not Found!"
         });
       }
 
@@ -118,8 +98,8 @@ exports.update = function (req, res) {
         .then(updated => {
           res.json(200, {
             success: true,
-            message: 'Job Updated!',
-            job: updated
+            message: 'Employee Updated!',
+            employee: updated
           });
         }).catch(err => {
           console.log('err', err);
@@ -141,19 +121,19 @@ exports.update = function (req, res) {
 };
 
 exports.destroy = function (req, res) {
-  Job
+  Employee
     .destroy({
-      where: { job_id: req.params.id }
+      where: { employee_id: req.params.id }
     })
     .then(result => {
       if (result === 0) return res.json(404, {
         success: true,
-        message: "Job id not found, nothing to delete!"
+        message: "Employee id not found, nothing to delete!"
       });
 
       res.json(200, {
         success: true,
-        message: "Job Deleted",
+        message: "Employee Deleted",
         result: result
       });
     })

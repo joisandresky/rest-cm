@@ -1,12 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./job.controller');
+const controller = require('./employee.controller');
 
 // Get All Data Jobs
 router.get('/', controller.index);
-
-// Search Jobs
-router.get('/search', controller.search);
 
 // Show One Data Job
 router.get('/:id', controller.show);
